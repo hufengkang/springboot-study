@@ -1,0 +1,19 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /hfk
+
+#数据源
+spring:
+  datasource:
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/batch?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+#mybatis
+#mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml 指定全局配置文件的位置
+#  mapper-locations: classpath:mybatis/mapper/*.xml  指定sql映射文件的位置
