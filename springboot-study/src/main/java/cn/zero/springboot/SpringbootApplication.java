@@ -15,7 +15,6 @@ import java.util.Map;
 
 @SpringBootApplication
 public class SpringbootApplication {
-        private static final Logger logger = LoggerFactory.getLogger(SpringbootApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootApplication.class, args);
