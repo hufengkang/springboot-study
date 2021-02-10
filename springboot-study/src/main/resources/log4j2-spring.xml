@@ -8,7 +8,7 @@
     <Properties>
         <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
-        <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+        <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
         <!-- 定义日志存储的路径 -->
         <!--<property name="FILE_PATH" value="更换为你的日志路径" />-->
         <!--<property name="FILE_NAME" value="更换为你的项目名" />-->
@@ -87,12 +87,12 @@
             <AppenderRef ref="Console"/>
         </logger>
         <!--监控系统信息-->
-        <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
+        <!--若是additivity设为false，则子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
         <Logger name="org.springframework" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="Console"/>
             <!--<appender-ref ref="Filelog"/>-->
             <!--<appender-ref ref="RollingFileInfo"/>-->

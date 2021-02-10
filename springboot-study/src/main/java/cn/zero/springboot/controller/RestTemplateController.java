@@ -1,7 +1,9 @@
 package cn.zero.springboot.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
  * @author guiyuoneiros
  * @since 2021/2/8 23:22
  */
@@ -21,9 +22,10 @@ import java.util.Set;
 @RequestMapping("/restTemplate")
 public class RestTemplateController {
 
-    private final RestTemplate restTemplate = new RestTemplate();
-
     private static final Logger logger = LoggerFactory.getLogger(RestTemplateController.class);
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     //restTemplate 可变参 占位符 http get请求
     @RequestMapping("/getForEntityWithParams")
@@ -74,6 +76,38 @@ public class RestTemplateController {
         }
 
         return "success";
+    }
+
+    //post请求 占位符
+    @RequestMapping("/postForEntityWithParams")
+    public String postForEntityWithParams() {
+        String domain = "localhost:8081/hfk/restTemplate/getForEntityWithParams";
+        String url = "http://" + domain + "?param1={1}&param2={2}";
+        String param1 = "param1Value";
+        String param2 = "param2Value";
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("name", "zhangsan");
+        jsonObj.put("age", 18);
+
+        ResponseEntity<String> responseEntity = null;
+        try {
+            //请求路径、请求体参数、返回类型、uriVariables
+            responseEntity = restTemplate.postForEntity(url, jsonObj.toString(), String.class, param1, param2);
+
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+
+        int statusCode = responseEntity.getStatusCodeValue();
+        logger.info("statusCode--->{}",statusCode);
+        if(200 != statusCode){
+            return "false";
+        }
+
+        String responseBody = responseEntity.getBody();
+        logger.info(responseBody);
+        return "success";
+
     }
 
 }
