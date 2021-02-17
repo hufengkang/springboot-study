@@ -10,12 +10,14 @@
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
         <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
         <!-- 定义日志存储的路径 -->
-        <!--<property name="FILE_PATH" value="更换为你的日志路径" />-->
-        <!--<property name="FILE_NAME" value="更换为你的项目名" />-->
+        <property name="FILE_PATH" value="D:/develop/log/springboot" />
+        <property name="FILE_NAME" value="springboot-study" />
     </Properties>
 
+    <!-- 每一个appender最终决定哪些日志信息可以打印在自己的文件/console -->
     <appenders>
 
+        <!-- PatternLayout:打印格式，ThresholdFilter：日志信息过滤 -->
         <console name="Console" target="SYSTEM_OUT">
             <!--输出日志的格式-->
             <PatternLayout pattern="${LOG_PATTERN}"/>
@@ -28,76 +30,74 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </File> -->
 
-        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-      <!--
-      <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info.log" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
-            &lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）&ndash;&gt;
+        <!-- INFO 每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/${FILE_NAME}-info.log" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
+            <!-- 过滤DEBUG及以下级别的信息，只保留比较重要的日志 -->
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                &lt;!&ndash;interval属性用来指定多久滚动一次，默认是1 hour&ndash;&gt;
-                <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="10MB"/>
+                <!--interval属性用来指定多久滚动一次，默认是1 hour-->
+                <TimeBasedTriggeringPolicy interval="12"/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
             </Policies>
-            &lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖&ndash;&gt;
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
             <DefaultRolloverStrategy max="15"/>
         </RollingFile>
-        -->
 
-        <!-- 这个会打印出所有的warn及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <!--
-        <RollingFile name="RollingFileWarn" fileName="${FILE_PATH}/warn.log" filePattern="${FILE_PATH}/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log.gz">
-            &lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）&ndash;&gt;
-            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+        <!-- DEBUG -->
+        <RollingFile name="RollingFileDebug" fileName="${FILE_PATH}/${FILE_NAME}-debug.log" filePattern="${FILE_PATH}/${FILE_NAME}-DEBUG-%d{yyyy-MM-dd}_%i.log.gz">
+            <!-- 打印DEBUG及以上的信息，日志较详细 -->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                &lt;!&ndash;interval属性用来指定多久滚动一次，默认是1 hour&ndash;&gt;
-                <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="10MB"/>
+                <!--interval属性用来指定多久滚动一次，默认是1 hour-->
+                <TimeBasedTriggeringPolicy interval="12"/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
             </Policies>
-            &lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖&ndash;&gt;
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
             <DefaultRolloverStrategy max="15"/>
         </RollingFile>
-        -->
-
-        <!-- 这个会打印出所有的error及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <!--
-        <RollingFile name="RollingFileError" fileName="${FILE_PATH}/error.log" filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
-            &lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）&ndash;&gt;
-            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="${LOG_PATTERN}"/>
-            <Policies>
-                &lt;!&ndash;interval属性用来指定多久滚动一次，默认是1 hour&ndash;&gt;
-                <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="10MB"/>
-            </Policies>
-            &lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖&ndash;&gt;
-            <DefaultRolloverStrategy max="15"/>
-        </RollingFile>
-        -->
 
     </appenders>
 
-    <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
-    <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
+    <!-- Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
+
+    <!-- 子logger生效规则：
+            只有定义了logger并引入的appender，appender才会生效
+    -->
+    <!-- 具体原则：
+            若某个包下的class被指定了logger(子logger)，则root(根logger)将这些class下的日志打印控制权交给logger，自己不再参与管理
+    -->
     <loggers>
 
-        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
-        <logger name="org.mybatis" level="DEBUG" additivity="false">
+        <!-- 可以用子logger指定某些包打印日志的级别，过滤无用信息 -->
+        <!--若是additivity设为false，则子Logger只会在自己的appender里输出，而不会在root的appender里输出。-->
+        <logger name="org.mybatis" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileDebug"/>
         </logger>
-        <!--监控系统信息-->
-        <!--若是additivity设为false，则子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
+
         <Logger name="org.springframework" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileDebug"/>
         </Logger>
 
-        <root level="INFO">
+        <Logger name="org.hibernate" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileDebug"/>
+        </Logger>
+
+
+        <root level="DEBUG">
+            <!-- Console 只用于本地开发，若应用部署到其他环境，则需将Console注释掉-->
             <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileDebug"/>
             <!--<appender-ref ref="Filelog"/>-->
-            <!--<appender-ref ref="RollingFileInfo"/>-->
-            <!--<appender-ref ref="RollingFileWarn"/>-->
-            <!--<appender-ref ref="RollingFileError"/>-->
         </root>
     </loggers>
 

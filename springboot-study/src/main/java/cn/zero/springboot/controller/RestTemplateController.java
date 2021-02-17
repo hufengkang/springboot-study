@@ -81,7 +81,7 @@ public class RestTemplateController {
     //post请求 占位符
     @RequestMapping("/postForEntityWithParams")
     public String postForEntityWithParams() {
-        String domain = "localhost:8081/hfk/restTemplate/getForEntityWithParams";
+        String domain = "localhost:8080/hfk/restTemplate/getForEntityWithParams";
         String url = "http://" + domain + "?param1={1}&param2={2}";
         String param1 = "param1Value";
         String param2 = "param2Value";
